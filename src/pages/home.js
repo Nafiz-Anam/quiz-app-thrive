@@ -4,15 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { getQues } from "../redux/quesSlice";
+import { getCategories } from "../redux/catSlice";
 import "./global.css";
 
 const Home = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { categories, isError, message } = useSelector(
-        (state) => state.categories
-    );
+    const { categories } = useSelector((state) => state.categories);
+    const { user, isLoading } = useSelector((state) => state.user);
 
     let catList = [];
     const cat = categories && categories;
@@ -28,6 +28,11 @@ const Home = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [categories]);
+    
+    useEffect(() => {
+        dispatch(getCategories());
+    }, []);
+
     const [ctg, setCtg] = useState("");
     const [diffi, setDiffi] = useState("");
     const [type, setType] = useState("");
@@ -58,13 +63,13 @@ const Home = () => {
         handleSubmit,
         formState: { errors },
     } = useForm();
+
     const onSubmit = (data) => {
         data.category = ctg.value;
         data.difficulty = diffi.value;
         data.type = type.value;
         dispatch(getQues(data));
-        navigate("questions");
-
+        navigate("/questions");
         // console.log(data);
     };
 
@@ -72,7 +77,12 @@ const Home = () => {
         <div className="container home-page">
             <div className="home-area d-flex justify-content-center">
                 <div className="form-area">
-                    <h1 className="text-center py-4">Select Your Options</h1>
+                    <h1 className="text-center user-heading">
+                        Welcome {user?.user_name}!
+                    </h1>
+                    <h3 className="text-center py-4">
+                        Please Select Your Options
+                    </h3>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="mb-3">
                             <label htmlFor="category" className="mb-2">
@@ -81,7 +91,7 @@ const Home = () => {
                             <Select
                                 id="category"
                                 placeholder="Select an Option"
-                                options={catList}
+                                options={catList && catList}
                                 isClearable={true}
                                 isSearchable={true}
                                 onChange={handleCat}
@@ -125,7 +135,6 @@ const Home = () => {
                                 {...register("ques_amount")}
                             />
                         </div>
-
                         <input
                             className="btn btn-primary px-3"
                             type="submit"

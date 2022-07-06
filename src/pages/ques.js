@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { decode } from "html-entities";
 import { useNavigate } from "react-router-dom";
-
 import "./global.css";
 
 const getRandomInt = (max) => {
@@ -15,10 +14,9 @@ const Ques = () => {
     const { ques, isLoading, isError, message } = useSelector(
         (state) => state.ques
     );
-    console.log(ques.length);
-
+    // console.log(ques.length);
     const [questionIndex, setQuestionIndex] = useState(0);
-    console.log(questionIndex);
+    // console.log(questionIndex);
     const [options, setOptions] = useState([]);
     useEffect(() => {
         if (ques.length) {
