@@ -1,4 +1,10 @@
-import { createStore } from "redux";
-import reducer from "./reducer";
+import { configureStore } from "@reduxjs/toolkit";
+import quesReducer from "../redux/quesSlice";
+import catReducer from "../redux/catSlice";
 
-export default createStore(reducer);
+export const store = configureStore({
+    reducer: {
+        ques: quesReducer,
+        categories: catReducer,
+    },
+});
