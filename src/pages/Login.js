@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import "./global.css";
@@ -8,9 +8,7 @@ import { setUser } from "../redux/userSlice";
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    // const { user, isLoading, isError, message } = useSelector(
-    //     (state) => state.user
-    // );
+    const { user, isLoading } = useSelector((state) => state.user);
     // console.log(user);
     const {
         register,
@@ -22,8 +20,13 @@ const Login = () => {
         // console.log(data);
         dispatch(setUser(data));
         reset();
-        navigate("/home");
     };
+
+    useEffect(() => {
+        if (user) {
+            navigate("/home");
+        }
+    }, [user]);
 
     return (
         <div className="container text-center login-page">

@@ -13,6 +13,9 @@ const Home = () => {
 
     const { categories } = useSelector((state) => state.categories);
     const { user, isLoading } = useSelector((state) => state.user);
+    if (!user) {
+        navigate("/");
+    }
 
     let catList = [];
     const cat = categories && categories;
@@ -28,7 +31,7 @@ const Home = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [categories]);
-    
+
     useEffect(() => {
         dispatch(getCategories());
     }, []);

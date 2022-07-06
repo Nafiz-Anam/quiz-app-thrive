@@ -44,3 +44,13 @@
   font-weight: 700;
   text-transform: capitalize;
 }
+
+.single-option{
+  background-color: rgb(2, 255, 171);
+}
+.single-option:hover{
+  background-color: greenyellow;
+}
+.active{
+  background-color: greenyellow;
+}

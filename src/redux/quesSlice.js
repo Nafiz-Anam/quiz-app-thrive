@@ -18,7 +18,7 @@ export const getQues = createAsyncThunk(
         // console.log("state from thunkAPI => ", thunkAPI.getState());
         // console.log("data from slice =>", data);
         const uri = `https://opentdb.com/api.php?amount=${data.ques_amount}&category=${data.category}&difficulty=${data.difficulty}&type=${data.type}`;
-        console.log(uri);
+        // console.log(uri);
         try {
             const resp = await axios(uri);
             // console.log(resp);
@@ -35,6 +35,11 @@ export const getQues = createAsyncThunk(
         }
     }
 );
+
+export const ans = createAsyncThunk("ques/Ans", async (data, thunkAPI) => {
+    console.log(thunkAPI);
+    console.log(data);
+});
 
 export const quesSlice = createSlice({
     name: "question",
